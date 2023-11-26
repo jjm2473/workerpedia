@@ -1,3 +1,4 @@
+name = "wp"
 main = "_worker.js"
 compatibility_date = "2023-11-26"
 compatibility_flags = [ "transformstream_enable_standard_constructor" ]
