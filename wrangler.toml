@@ -1,0 +1,2 @@
+main = "_worker.js"
+compatibility_flags = [ "transformstream_enable_standard_constructor" ]
