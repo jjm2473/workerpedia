@@ -63,6 +63,10 @@ async function handleRequest(request) {
       var ual = (ua || "").toLowerCase()
       var target = `https://zh${ual.indexOf("mobile") !== -1 || ual.indexOf("android") !== -1 || ual.indexOf("like mac os x") !== -1 ? ".m" : ""}.wik${"ip"}edia.org${u.pathname}${u.search}`
       d = await fetch(new Request(target, request))
+      if (u.pathname === "/wiki/" && d.status == 301) {
+        var red = new URL(d.headers.get('Location'));
+        return new Response("", { status: 301, headers: { "Location": `${red.pathname}${red.search}` } });
+      }
       var resptype = d.headers.get("Content-Type")
       if (resptype.startsWith("text/html")) {
         res = new HTMLRewriter().on("*", new ElementHandler()).transform(d)
