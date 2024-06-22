@@ -80,6 +80,14 @@
           var red = new URL(d.headers.get("Location"));
           return new Response("", { status: 301, headers: { "Location": `${red.pathname}${red.search}` } });
         }
+        if (d.status == 302) {
+          var red = new URL(d.headers.get("Location"));
+          if (red.host.endsWith(".wikipedia.org")) {
+            return new Response("", { status: 302, headers: { "Location": `${red.pathname}${red.search}` } });
+          } else {
+            return d;
+          }
+        }
         var resptype = d.headers.get("Content-Type");
         if (resptype.startsWith("text/html")) {
           res = new HTMLRewriter().on("*", new ElementHandler()).transform(d);
